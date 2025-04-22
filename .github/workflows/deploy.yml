@@ -6,8 +6,8 @@ on:
       - main  
 
 env:
-  PROJECT_ID: basic-fullstack-app
-  SERVICE_NAME: your-cloud-run-service-name
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  SERVICE_NAME: basic-fullstack-app
   REGION: asia-southeast1
   IMAGE_NAME: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}
 
