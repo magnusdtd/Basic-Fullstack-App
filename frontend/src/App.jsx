@@ -7,17 +7,17 @@ function App() {
   const [name, setName] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/hello')
+    axios.get('https://https://basic-fullstack-app-808541460346.asia-southeast1.run.app/api/hello') 
       .then((res) => {
         console.log('res: ', res);
         console.log('res.data: ', res.data);
         setMessage(res.data.message);
       });
   }, []);
-
+  
   const sendName = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8080/api/user', { name })
+    axios.post('https://https://basic-fullstack-app-808541460346.asia-southeast1.run.app/api/user', { name }) 
       .then(res => setGreeting(res.data.greeting));
   };
 

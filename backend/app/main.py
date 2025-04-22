@@ -6,7 +6,6 @@ from pydantic import BaseModel
 import os
 
 app = FastAPI()
-# app = FastAPI(docs_url="/")
 
 app.add_middleware(
     CORSMiddleware,
