@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  basic-fullstack-app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend/app:/app/app  # Mount the app directory for live code updates
+    ports:
+      - "8080:8080"  # Map container port 8080 to host port 8080
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
