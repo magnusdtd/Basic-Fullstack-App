@@ -9,7 +9,6 @@ env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
   SERVICE_NAME: basic-fullstack-app
   REGION: asia-southeast1
-  IMAGE_NAME: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}
 
 jobs:
   build-deploy:
@@ -47,15 +46,20 @@ jobs:
       run: gcloud auth configure-docker
 
     - name: Build Docker image
-      run: docker build -t $IMAGE_NAME .
+      run: |
+        IMAGE_NAME=gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}
+        docker build -t $IMAGE_NAME .
 
     - name: Push Docker image to GCR
-      run: docker push $IMAGE_NAME
+      run: |
+        IMAGE_NAME=gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}
+        docker push $IMAGE_NAME
 
     - name: Deploy to Cloud Run
       run: |
-        gcloud run deploy $SERVICE_NAME \
+        IMAGE_NAME=gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}
+        gcloud run deploy ${{ env.SERVICE_NAME }} \
           --image $IMAGE_NAME \
           --platform managed \
-          --region $REGION \
+          --region ${{ env.REGION }} \
           --allow-unauthenticated
