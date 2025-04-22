@@ -42,6 +42,15 @@ jobs:
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
 
+    - name: Ensure GCR Repository Exists
+      run: |
+        gcloud artifacts repositories describe basic-fullstack-app \
+          --location=${{ env.REGION }} || \
+        gcloud artifacts repositories create basic-fullstack-app \
+          --repository-format=DOCKER \
+          --location=${{ env.REGION }} \
+          --description="Repository for basic-fullstack-app"
+
     - name: Configure Docker for GCR
       run: gcloud auth configure-docker
 
