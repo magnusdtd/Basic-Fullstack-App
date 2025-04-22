@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const API_BASE_URL = "hhttps://basic-fullstack-app-808541460346.asia-southeast1.run.app"
+const API_BASE_URL = "https://basic-fullstack-app-808541460346.asia-southeast1.run.app"
 
 function App() {
   const [message, setMessage] = useState('');
