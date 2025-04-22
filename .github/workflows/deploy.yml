@@ -54,7 +54,7 @@ jobs:
     - name: Tag and Push to GCR
       run: |
         IMAGE_NAME=gcr.io/${{ secrets.PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
-        docker tag basic-fullstack-app $IMAGE_NAME
+        docker tag basic-fullstack-app:latest $IMAGE_NAME
         docker push $IMAGE_NAME
 
     - name: Deploy to Cloud Run
@@ -65,4 +65,3 @@ jobs:
           --platform managed \
           --region ${{ env.REGION }} \
           --allow-unauthenticated
-
