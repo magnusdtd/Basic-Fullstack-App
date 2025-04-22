@@ -46,7 +46,7 @@ jobs:
       run: gcloud auth configure-docker
 
     - name: Build backend Docker image using Compose
-      run: docker-compose build
+      run: docker compose build
 
     - name: Tag and Push to GCR
       run: |
