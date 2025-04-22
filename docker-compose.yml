@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   basic-fullstack-app:
+    image: basic-fullstack-app
     build:
       context: ./backend
       dockerfile: Dockerfile
