@@ -10,7 +10,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://basic-fullstack-app-808541460346.asia-southeast1.run.app"],  
+    allow_origins=["https://basic-fullstack-app-808541460346.asia-southeast1.run.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
