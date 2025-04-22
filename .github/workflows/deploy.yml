@@ -45,15 +45,14 @@ jobs:
     - name: Configure Docker for GCR
       run: gcloud auth configure-docker
 
-    - name: Build Docker image
-      run: |
-        IMAGE_NAME=gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}
-        docker build -t $IMAGE_NAME .
+    - name: Build backend Docker image using Compose
+      run: docker-compose build
 
-    - name: Push Docker image to GCR
+    - name: Tag and Push to GCR
       run: |
-        IMAGE_NAME=gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}
-        docker push $IMAGE_NAME
+        docker tag basic-fullstack-app gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}
+        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}
+
 
     - name: Deploy to Cloud Run
       run: |
