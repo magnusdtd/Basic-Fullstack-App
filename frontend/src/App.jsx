@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = "hhttps://basic-fullstack-app-808541460346.asia-southeast1.run.app"
+
 function App() {
   const [message, setMessage] = useState('');
   const [greeting, setGreeting] = useState('');
   const [name, setName] = useState('');
 
   useEffect(() => {
-    axios.get('https://basic-fullstack-app-808541460346.asia-southeast1.run.app/api/hello') 
+    axios.get(`${API_BASE_URL}/api/hello`) 
       .then((res) => {
         console.log('res: ', res);
         console.log('res.data: ', res.data);
@@ -17,7 +19,7 @@ function App() {
   
   const sendName = (e) => {
     e.preventDefault();
-    axios.post('https://basic-fullstack-app-808541460346.asia-southeast1.run.app/api/user', { name })
+    axios.post(`${API_BASE_URL}/api/user`, { name })
       .then(res => setGreeting(res.data.greeting));
   };
 
