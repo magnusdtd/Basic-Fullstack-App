@@ -7,9 +7,10 @@ import os
 
 app = FastAPI()
 
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://basic-fullstack-app-808541460346.asia-southeast1.run.app"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -31,7 +32,7 @@ class User(BaseModel):
 
 @app.post("/api/user")
 def receive_user(user: User):
-  return {"greeting": f"Hello, {user.name}!"}
+    return {"greeting": f"Hello, {user.name}!"}
 
 # Optional: Catch-all for React routes (SPA)
 @app.get("/{full_path:path}")
