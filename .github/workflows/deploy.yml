@@ -9,6 +9,7 @@ env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
   SERVICE_NAME: basic-fullstack-app
   REGION: asia-southeast1
+  REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
 
 jobs:
   build-deploy:

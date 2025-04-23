@@ -1,23 +1,15 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
-import api from './services/api.js';
+import Main from './components/Main';
 
-const App = () => {
-  const [message, setMessage] = useState('');
-  
-  useEffect(() => {
-    api.get('/api/hello') 
-      .then((res) => {
-        setMessage(res.data.message);
-      });
-  }, []);
-  
+function App() {
+  const [loggedInUser, setLoggedInUser] = useState(null); 
+
   return (
     <Router>
       <div style={{ padding: '2rem' }}>
-        <h2>{message}</h2>
         <Routes>
           <Route
             path="/"
@@ -33,12 +25,22 @@ const App = () => {
               </div>
             }
           />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} />} />
           <Route path="/register" element={<Register />} />
+          <Route
+            path="/main"
+            element={
+              loggedInUser ? (
+                <Main loggedInUser={loggedInUser} />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
         </Routes>
       </div>
     </Router>
   );
-};
+}
 
 export default App;

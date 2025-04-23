@@ -1,24 +1,33 @@
 from fastapi import APIRouter, HTTPException, Depends
-from sqlmodel import Session, select
+from sqlmodel import Session
 from app.models.database import User, get_session
 from passlib.context import CryptContext
+from app.models.queries import get_user_by_username, create_user
+from app.models.database import LoginRequest
 
 router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 @router.post("/register")
 def register(user: User, db: Session = Depends(get_session)):
+    # Check if the user already exists
+    existing_user = get_user_by_username(db, user.username)
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Username already exists")
+    
     hashed_password = pwd_context.hash(user.password)
-    db_user = User(username=user.username, password=hashed_password)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
+    create_user(db, user.username, hashed_password)
     return {"message": "User registered successfully."}
 
 @router.post("/login")
-def login(username: str, password: str, db: Session = Depends(get_session)):
-    statement = select(User).where(User.username == username)
-    db_user = db.exec(statement).first()
-    if not db_user or not pwd_context.verify(password, db_user.password):
+def login(request: LoginRequest, db: Session = Depends(get_session)):
+    # Check if the user exists
+    db_user = get_user_by_username(db, request.username)
+    if not db_user:
         raise HTTPException(status_code=400, detail="Invalid username or password")
+    
+    # Verify the password
+    if not pwd_context.verify(request.password, db_user.password):
+        raise HTTPException(status_code=400, detail="Invalid username or password")
+    
     return {"message": "Login successful."}

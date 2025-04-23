@@ -1,18 +1,23 @@
-import React, { useState } from "react";
-import api from "../services/api";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
 
-function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+function Login({ setLoggedInUser }) { 
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate(); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("/api/auth/login", { username, password });
+      const response = await api.post('/api/auth/login', { username, password });
       setMessage(response.data.message);
+      setLoggedInUser(username); 
+      navigate('/main'); 
     } catch (error) {
-      setMessage(error.response?.data?.detail || "Login failed");
+      console.log(error);
+      setMessage(error.response?.data?.detail || 'Login failed');
     }
   };
 
