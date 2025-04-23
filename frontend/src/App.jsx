@@ -1,44 +1,44 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
+import Login from './components/Login';
+import Register from './components/Register';
+import api from './services/api.js';
 
-const API_BASE_URL = "https://basic-fullstack-app-808541460346.asia-southeast1.run.app"
-
-function App() {
+const App = () => {
   const [message, setMessage] = useState('');
-  const [greeting, setGreeting] = useState('');
-  const [name, setName] = useState('');
-
+  
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/api/hello`) 
+    api.get('/api/hello') 
       .then((res) => {
-        console.log('res: ', res);
-        console.log('res.data: ', res.data);
         setMessage(res.data.message);
       });
   }, []);
   
-  const sendName = (e) => {
-    e.preventDefault();
-    axios.post(`${API_BASE_URL}/api/user`, { name })
-      .then(res => setGreeting(res.data.greeting));
-  };
-
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>{message}</h2>
-      <form onSubmit={sendName}>
-        <input
-          type="text"
-          placeholder="Enter your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          style={{ marginRight: '1rem' }}
-        />
-        <button type="submit">Send Name</button>
-      </form>
-      <p>{greeting}</p>
-    </div>
+    <Router>
+      <div style={{ padding: '2rem' }}>
+        <h2>{message}</h2>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                <h3>Welcome to the App</h3>
+                <Link to="/login">
+                  <button style={{ marginRight: '1rem' }}>Login</button>
+                </Link>
+                <Link to="/register">
+                  <button>Register</button>
+                </Link>
+              </div>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

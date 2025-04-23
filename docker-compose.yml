@@ -7,7 +7,33 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - ./backend/app:/app/app  # Mount the app directory for live code updates
+      - ./backend/app:/app/app 
+      - ./backend/app/build:/app/build
     ports:
-      - "8080:8080"  # Map container port 8080 to host port 8080
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
+      - "8080:8080"  
+    command: sh -c "while [ ! -d /app/build ]; do sleep 1; done; uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload"
+    depends_on:
+      - npm-build
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  npm-build:
+    image: node:18 
+    working_dir: /app
+    volumes:
+      - ./frontend:/app  
+      - ./backend/app/build:/app/build 
+    command: npm run build 
+
+volumes:
+  postgres_data:

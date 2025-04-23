@@ -1,2 +1,5 @@
 fastapi
 uvicorn
+sqlmodel
+passlib
+psycopg2-binary
