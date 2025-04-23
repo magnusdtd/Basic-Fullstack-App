@@ -10,12 +10,14 @@ function Main({ loggedInUser }) {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Welcome, {loggedInUser}!</h2>
-      <p>This is the main page of the application.</p>
-      <button onClick={handleLogout} style={{ marginTop: '1rem' }}>
-        Logout
-      </button>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
+      <div className="text-center text-white">
+        <h1 lclassName="text-4xl font-bold"> Welcome, {loggedInUser}!</h1>
+        <p className="mt-4 text-lg">  This is the main page of the application.</p>
+        <button onClick={handleLogout} className="px-6 py-3 mt-6 text-lg font-medium bg-white text-blue-500 rounded-lg hover:bg-gray-100">
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

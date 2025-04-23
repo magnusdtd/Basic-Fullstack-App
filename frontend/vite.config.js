@@ -1,8 +1,12 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    tailwindcss()
+  ],
   build: {
     outDir: '../backend/app/build', // Output to FastAPI's expected directory
     assetsDir: 'static', // Place assets in 'static' folder

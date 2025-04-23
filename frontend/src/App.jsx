@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-ro
 import Login from './components/Login';
 import Register from './components/Register';
 import Main from './components/Main';
+import './App.css'
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null); 
